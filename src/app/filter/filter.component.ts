@@ -1,15 +1,25 @@
+import { ResultComponent } from './../result/result.component';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ThrowStmt } from '@angular/compiler';
+import { ItemModel } from '../item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
+  name = new FormControl('');
+  type = new FormControl('');
+  pass = false;
 
-  constructor() { }
+  constructor( private _router: Router) { }
 
-  ngOnInit() {
+  search() {
+    this.pass = true;
+    this._router.navigate(['/result'], {queryParams: {p1: this.name.value, p2: this.type.value} });  // p2: this.type.value
   }
 
 }
