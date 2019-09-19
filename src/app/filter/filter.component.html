@@ -1,9 +1,11 @@
-<input placeholder="name" [formControl]="name" />
-<input placeholder="type" [formControl]="type" />
+<mat-card>
+  <mat-card-header>
+    <input placeholder="name" [formControl]="name" />
+    <input placeholder="type" [formControl]="type" />
+    <button mat-buton color="primary" (click)="search()">Search</button>
+  </mat-card-header>
 
-<button (click)="search()">Search</button>
+  
 
-
-
-Router:
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</mat-card>

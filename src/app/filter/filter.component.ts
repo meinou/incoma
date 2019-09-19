@@ -1,8 +1,7 @@
+import { MatButtonModule } from '@angular/material';
 import { ResultComponent } from './../result/result.component';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ThrowStmt } from '@angular/compiler';
-import { ItemModel } from '../item';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +18,7 @@ export class FilterComponent {
 
   search() {
     this.pass = true;
-    this._router.navigate(['/result'], {queryParams: {p1: this.name.value, p2: this.type.value} });  // p2: this.type.value
+    this._router.navigate(['/result'], {queryParams: {p1: this.name.value, p2: this.type.value} });
   }
 
 }

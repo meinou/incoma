@@ -3,6 +3,7 @@ import { Component, OnInit, Input} from '@angular/core';
 import { ItemModel } from '../item';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./result.component.css']
 })
 export class ResultComponent implements OnInit {
-  items: ItemModel[];
+  items: Observable<ItemModel[]>;
   name: string;
   type: string;
 
@@ -23,10 +24,14 @@ export class ResultComponent implements OnInit {
     .subscribe(params => {
       this.name = params.p1;
       this.type = params.p2;
-      this.dataService.getItems()
-      .subscribe(items =>
-        this.items = items.filter( item =>
-          item.name.includes(this.name) && item.type.includes(this.type)));
+      this.items = this.dataService.getItems()
+      .pipe(
+        map(items =>
+          items.filter( item =>
+             item.name.includes(this.name) && item.type.includes(this.type)
+             )
+        )
+      );
     });
   }
 }
