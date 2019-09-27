@@ -1,9 +1,9 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ItemModel } from '../item';
 import { DataService } from '../data.service';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent implements OnInit, OnDestroy {
+export class ResultComponent implements OnInit {
   items: Observable<ItemModel[]>;
   name: string;
   type: string;
@@ -21,22 +21,16 @@ export class ResultComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.subscription = this.route.queryParams
-    .subscribe(params => {
-      this.name = params.p1 ? params.p1 : '';
-      this.type = params.p2 ? params.p2 : '';
-      this.items = this.dataService.getItems()
-      .pipe(
-        map(items =>
-          items.filter( item =>
-             item.name.includes(this.name) && item.type.includes(this.type)
-             )
-        )
-      );
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.items = this.route.queryParams
+    .pipe(
+      switchMap(params => {
+        this.name = params.p1 ? params.p1 : '';
+        this.type = params.p2 ? params.p2 : '';
+        return this.dataService.getItems();
+      }),
+      map(items => {
+        return items.filter(item => item.name.includes(this.name) && item.type.includes(this.type));
+      })
+    );
   }
 }
