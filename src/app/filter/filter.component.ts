@@ -11,17 +11,20 @@ import { Observable, of } from 'rxjs';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
   name = new FormControl('');
   type = new FormControl('');
   pass = false;
+  name_holder: string;
+  type_holder: string;
 
   constructor( private _router: Router,
-               private route: ActivatedRoute) { }
-
-  ngOnInit() {
-
-  }
+               private route: ActivatedRoute) {
+                this.route.queryParams.subscribe(params => {
+                  this.name_holder = params.p1 ? params.p1 : '';
+                  this.type_holder = params.p2 ? params.p2 : '';
+                });
+               }
 
   search() {
     this.pass = true;

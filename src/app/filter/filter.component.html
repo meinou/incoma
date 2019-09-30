@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header>
-    <input placeholder="name" [formControl]="name" />
-    <input placeholder="type" [formControl]="type" />
+    <input placeholder="name" [formControl]="name" [value]="name_holder" />
+    <input placeholder="type" [formControl]="type" [value]="type_holder"/>
     <button mat-buton color="primary" (click)="search()">Search</button>
   </mat-card-header>
 
