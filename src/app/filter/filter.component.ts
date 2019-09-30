@@ -19,8 +19,8 @@ export class FilterComponent {
   type_holder: string;
 
   constructor( private _router: Router,
-               private route: ActivatedRoute) {
-                this.route.queryParams.subscribe(params => {
+               private _route: ActivatedRoute) {
+                this._route.queryParams.subscribe(params => {
                   this.name_holder = params.p1 ? params.p1 : '';
                   this.type_holder = params.p2 ? params.p2 : '';
                 });
